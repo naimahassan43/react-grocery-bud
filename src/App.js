@@ -17,20 +17,26 @@ function App() {
     e.preventDefault();
     if (!name) {
       //display alert
-      showAlert( true,  "please enter value",  "danger" );
+      showAlert(true, "please enter value", "danger");
     } else if (name && isEditing) {
       //deal with edit
     } else {
       //show alert
+      showAlert(true, "item added to the list", "success");
       const newItem = { id: new Date().getTime().toString(), title: name };
       setList([...list, newItem]);
       setName("");
     }
   };
 
-  const showAlert = (show=false, msg="", type="") => {
-    setAlert({show,type,msg});
-  }
+  const showAlert = (show = false, msg = "", type = "") => {
+    setAlert({ show, type, msg });
+  };
+
+  const clearList = () => {
+    showAlert(true, "empty list", "danger");
+    setList([]);
+  };
   return (
     <section className="section-center">
       <form className="grocery-form" onSubmit={handleSubmit}>
@@ -52,7 +58,9 @@ function App() {
       {list.length > 0 && (
         <div className="grocery-container">
           <List items={list} />
-          <button className="clear-btn">clear items</button>
+          <button className="clear-btn" onClick={clearList}>
+            clear items
+          </button>
         </div>
       )}
     </section>
